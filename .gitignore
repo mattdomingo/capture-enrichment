@@ -1,0 +1,81 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Distribution / packaging
+.cache/
+*.whl
+
+# Unit test / coverage
+.tox/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+htmlcov/
+.pytest_cache/
+.hypothesis/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# AWS / SAM / CDK
+.aws-sam/
+cdk.out/
+*.cfn.json
+samconfig.toml
+
+# Lambda build artifacts
+.build/
+layer/
+*.zip
+
+# Video / media (never commit raw captures)
+*.mp4
+*.mov
+*.hevc
+*.h264
+*.mkv
+*.avi
+
+# Temporary files
+*.tmp
+*.log
+/tmp/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V3/
+.Trashes
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Docker
+.dockerignore
+
+# uv
+.uv/
+uv.lock
