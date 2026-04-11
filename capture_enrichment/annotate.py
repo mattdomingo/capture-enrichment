@@ -9,20 +9,31 @@ Flow per chunk:
   5. Delete uploaded file (always, in finally)
 
 Malformed or empty Gemini responses return [] rather than raising.
+
+Rate limit handling:
+  429 responses include a retryDelay hint (e.g. "36s"). We honour that hint
+  with a small buffer and retry up to _MAX_RETRIES times before re-raising.
+  Note: if the quota ceiling itself is 0 (free-tier limit reached or billing
+  not enabled), retrying will not help — the caller will see the error re-raised
+  after all retries are exhausted.
 """
 
 import json
+import re
 import time
 from pathlib import Path
 
 import google.genai as genai
 import google.genai.types as gtypes
+from google.genai import errors as genai_errors
 
 from .models import Event, VideoChunk
 
 _MODEL = "gemini-2.0-flash"
 _UPLOAD_POLL_INTERVAL_SEC = 2
 _UPLOAD_TIMEOUT_SEC = 60
+_MAX_RETRIES = 3
+_DEFAULT_RETRY_DELAY_SEC = 60  # fallback if no retryDelay hint in error
 
 
 def create_client(api_key: str) -> genai.Client:
@@ -73,7 +84,8 @@ Return [] if no notable events occur in this segment."""
 def annotate_chunk(client: genai.Client, chunk: VideoChunk) -> list[Event]:
     """
     Upload the chunk video, run Gemini annotation, return parsed Events.
-    Deletes the uploaded file from Gemini's Files API before returning.
+    Retries up to _MAX_RETRIES times on 429 rate-limit errors, honouring the
+    retryDelay hint from the API response. Deletes the uploaded file before returning.
     """
     uploaded = upload_video_chunk(client, chunk.video_path)
     try:
@@ -81,16 +93,41 @@ def annotate_chunk(client: genai.Client, chunk: VideoChunk) -> list[Event]:
             file_uri=uploaded.uri,
             mime_type="video/quicktime",
         )
-        response = client.models.generate_content(
-            model=_MODEL,
-            contents=[video_part, _build_prompt(chunk)],
-        )
-        return _parse_events(response.text)
+        prompt = _build_prompt(chunk)
+        last_exc: Exception | None = None
+        for attempt in range(_MAX_RETRIES + 1):
+            try:
+                response = client.models.generate_content(
+                    model=_MODEL,
+                    contents=[video_part, prompt],
+                )
+                return _parse_events(response.text)
+            except genai_errors.ClientError as exc:
+                if exc.code != 429 or attempt == _MAX_RETRIES:
+                    raise
+                last_exc = exc
+                delay = _parse_retry_delay(str(exc)) or _DEFAULT_RETRY_DELAY_SEC
+                import typer
+                typer.echo(
+                    f"    429 rate limit — retrying in {delay}s "
+                    f"(attempt {attempt + 1}/{_MAX_RETRIES})",
+                    err=True,
+                )
+                time.sleep(delay)
+        raise last_exc  # unreachable but satisfies type checker
     finally:
         try:
             client.files.delete(name=uploaded.name)
         except Exception:
             pass  # best-effort cleanup
+
+
+def _parse_retry_delay(error_text: str) -> float | None:
+    """Extract retryDelay seconds from a Gemini 429 error message string."""
+    match = re.search(r"retryDelay['\"]?\s*:\s*['\"](\d+)s", error_text)
+    if match:
+        return float(match.group(1)) + 2  # small buffer
+    return None
 
 
 def _parse_events(text: str) -> list[Event]:

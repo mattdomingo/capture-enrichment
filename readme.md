@@ -2,6 +2,8 @@
 
 An AWS Lambda microservice that ingests Apple Vision Pro capture packages and returns structured, timestamped activity annotations — including semantic chapter segmentation.
 
+  uv run python -m capture_enrichment.handler --input <filepath> --output result.json --telemetry-resolution 5.0 
+
 ## What it does
 
 Given a capture package from an Apple Vision Pro session (video + metadata + CSV telemetry), this service returns a JSON document describing what is happening at each point in the video, grouped into logical chapters.
