@@ -31,9 +31,9 @@ def create_client(api_key: str) -> genai.Client:
 
 def upload_video_chunk(client: genai.Client, chunk_path: Path) -> gtypes.File:
     """Upload a video file to the Gemini Files API and wait until it is ACTIVE."""
-    uploaded = client.files.upload(path=str(chunk_path))
+    uploaded = client.files.upload(file=chunk_path)
     deadline = time.monotonic() + _UPLOAD_TIMEOUT_SEC
-    while uploaded.state.name != "ACTIVE":
+    while uploaded.state.value != "ACTIVE":
         if time.monotonic() > deadline:
             raise TimeoutError(f"Gemini file upload did not become ACTIVE within {_UPLOAD_TIMEOUT_SEC}s")
         time.sleep(_UPLOAD_POLL_INTERVAL_SEC)
