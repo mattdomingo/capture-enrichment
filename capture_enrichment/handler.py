@@ -22,7 +22,7 @@ from .ingest import load_capture_package, load_metadata, load_transcript_tokens
 from .models import EnrichmentResult, VideoChunk
 from .segment import deduplicate_events, segment_into_chapters
 from .telemetry import build_telemetry, load_device_pose, load_hand_pose, load_object_pose
-from .video import downsample_video, extract_chunk, get_video_duration, plan_chunks, select_video
+from .video import downsample_video, extract_chunk, extract_thumbnail, get_video_duration, plan_chunks, select_video
 
 app = typer.Typer(add_completion=False)
 
@@ -36,12 +36,17 @@ def main(
         "--telemetry-resolution",
         help="Telemetry bucket size in seconds (overrides TELEMETRY_RESOLUTION_SEC)",
     ),
+    thumbnails_dir: Optional[Path] = typer.Option(
+        None,
+        "--thumbnails-dir",
+        help="Write per-event JPEG thumbnails to this directory",
+    ),
 ) -> None:
     cfg = Config()
     if telemetry_resolution is not None:
         cfg = cfg.model_copy(update={"telemetry_resolution_sec": telemetry_resolution})
 
-    result = process_capture(input, cfg)
+    result = process_capture(input, cfg, thumbnails_dir=thumbnails_dir)
     json_out = result.model_dump_json(indent=2)
 
     if output:
@@ -51,7 +56,7 @@ def main(
         typer.echo(json_out)
 
 
-def process_capture(capture_path: Path, cfg: Config) -> EnrichmentResult:
+def process_capture(capture_path: Path, cfg: Config, thumbnails_dir: Optional[Path] = None) -> EnrichmentResult:
     """
     Main pipeline:
       1. Ingest capture package
@@ -122,6 +127,17 @@ def process_capture(capture_path: Path, cfg: Config) -> EnrichmentResult:
         typer.echo("Deduplicating events...", err=True)
         all_events = deduplicate_events(chunk_results)
         typer.echo(f"  {len(all_events)} unique event(s)", err=True)
+
+        if thumbnails_dir is not None:
+            thumbnails_dir.mkdir(parents=True, exist_ok=True)
+            typer.echo(f"Extracting thumbnails → {thumbnails_dir}", err=True)
+            for event in all_events:
+                h, m, s = event.timestamp.split(":")
+                offset_sec = int(h) * 3600 + int(m) * 60 + int(s)
+                safe_ts = event.timestamp.replace(":", "-")
+                dst = thumbnails_dir / f"{safe_ts}.jpg"
+                extract_thumbnail(downsampled, dst, offset_sec)
+                event.thumbnail_path = str(dst)
 
         typer.echo("Segmenting into chapters...", err=True)
         chapters = segment_into_chapters(client, all_events, duration)
