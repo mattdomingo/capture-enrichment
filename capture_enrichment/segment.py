@@ -20,7 +20,7 @@ import google.genai as genai
 from .annotate import _parse_events, _sec_to_ts
 from .models import Chapter, Event
 
-_MODEL = "gemini-2.0-flash"
+_MODEL = "gemini-2.5-flash"
 
 
 def _ts_to_sec(ts: str) -> float:

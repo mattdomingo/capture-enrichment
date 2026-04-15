@@ -1,0 +1,61 @@
+{
+  "session_id": "D834FA49-D935-4FAA-A4BA-C816E3C162AC",
+  "duration_seconds": 24.414118874999986,
+  "processed_at": "2026-04-15T23:23:21.458357+00:00",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Physical Device Initial Setup",
+      "start_ts": "00:00:00",
+      "end_ts": "00:00:09",
+      "events": [
+        {
+          "timestamp": "00:00:04",
+          "action": "User turns a small knob on the physical Nakamichi 610 Scan.",
+          "confidence": 1.0
+        },
+        {
+          "timestamp": "00:00:07",
+          "action": "User presses another physical button on the Nakamichi 610 Scan.",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Spatial Interface Interaction",
+      "start_ts": "00:00:10",
+      "end_ts": "00:00:15",
+      "events": [
+        {
+          "timestamp": "00:00:10",
+          "action": "Right hand pinch gesture detected.",
+          "confidence": 0.95
+        },
+        {
+          "timestamp": "00:00:13",
+          "action": "Left hand pinch gesture detected.",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Device Control & Session Conclusion",
+      "start_ts": "00:00:16",
+      "end_ts": "00:00:24",
+      "events": [
+        {
+          "timestamp": "00:00:16",
+          "action": "User simultaneously presses two physical buttons on Nakamichi 610 Scan.",
+          "confidence": 1.0
+        },
+        {
+          "timestamp": "00:00:20",
+          "action": "User gives a thumbs up gesture with both hands.",
+          "confidence": 1.0
+        }
+      ]
+    }
+  ]
+}

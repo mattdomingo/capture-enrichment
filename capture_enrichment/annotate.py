@@ -29,7 +29,7 @@ from google.genai import errors as genai_errors
 
 from .models import Event, VideoChunk
 
-_MODEL = "gemini-2.0-flash"
+_MODEL = "gemini-2.5-flash"
 _UPLOAD_POLL_INTERVAL_SEC = 2
 _UPLOAD_TIMEOUT_SEC = 60
 _MAX_RETRIES = 3
