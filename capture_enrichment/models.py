@@ -10,6 +10,7 @@ class Event(BaseModel):
     timestamp: str   # "HH:MM:SS" absolute session time
     action: str
     confidence: float
+    thumbnail_path: str | None = None
 
 
 class Chapter(BaseModel):

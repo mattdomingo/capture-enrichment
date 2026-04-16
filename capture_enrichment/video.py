@@ -96,6 +96,22 @@ def plan_chunks(
     return chunks
 
 
+def extract_thumbnail(src: Path, dst: Path, offset_sec: float) -> Path:
+    """
+    Extract a single frame from src at offset_sec and write it as a JPEG.
+
+    Uses input-side seek (-ss before -i) for fast seeking on large files.
+    """
+    (
+        ffmpeg
+        .input(str(src), ss=offset_sec)
+        .output(str(dst), vframes=1, format="image2", vcodec="mjpeg")
+        .overwrite_output()
+        .run(quiet=True)
+    )
+    return dst
+
+
 def extract_chunk(src: Path, dst: Path, start_sec: float, end_sec: float) -> Path:
     """
     Extract a time segment from src into dst using stream copy (no re-encode).
