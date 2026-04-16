@@ -10,7 +10,7 @@ Output (written to cwd):
     <session_id>_result/
         result.json
         thumbnails/
-            <chapter_id>_<action_order>.jpg   (one per event, 1-indexed)
+            ch<chapter_id>_pt<action_order>.jpg   (one per event, 1-indexed)
 """
 
 import sys
@@ -138,7 +138,7 @@ def process_capture(capture_path: Path, cfg: Config) -> Path:
             for order, event in enumerate(chapter.events, start=1):
                 h, m, s = event.timestamp.split(":")
                 offset_sec = int(h) * 3600 + int(m) * 60 + int(s)
-                filename = f"{chapter.id}_{order}.jpg"
+                filename = f"ch{chapter.id}_pt{order}.jpg"
                 extract_thumbnail(downsampled, thumbnails_subdir / filename, offset_sec)
                 event.thumbnail_path = f"thumbnails/{filename}"
 

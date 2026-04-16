@@ -1,0 +1,61 @@
+{
+  "session_id": "D834FA49-D935-4FAA-A4BA-C816E3C162AC",
+  "duration_seconds": 24.414118874999986,
+  "processed_at": "2026-04-16T01:44:57.214543+00:00",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Initial App Adjustment",
+      "start_ts": "00:00:00",
+      "end_ts": "00:00:10",
+      "events": [
+        {
+          "timestamp": "00:00:04",
+          "action": "User turns a virtual knob on the Nakamichi 610 spatial app with their right hand.",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch1_pt1.jpg"
+        },
+        {
+          "timestamp": "00:00:08",
+          "action": "User turns another virtual knob on the Nakamichi 610 spatial app with their right hand.",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch1_pt2.jpg"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Nakamichi App Interaction & Control",
+      "start_ts": "00:00:10",
+      "end_ts": "00:00:20",
+      "events": [
+        {
+          "timestamp": "00:00:11",
+          "action": "User performs a two-handed grab gesture on the virtual Nakamichi 610 spatial app.",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch2_pt1.jpg"
+        },
+        {
+          "timestamp": "00:00:16",
+          "action": "User presses multiple virtual buttons on the Nakamichi 610 spatial app with both hands.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch2_pt2.jpg"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Session Conclusion",
+      "start_ts": "00:00:20",
+      "end_ts": "00:00:24",
+      "events": [
+        {
+          "timestamp": "00:00:21",
+          "action": "User makes a 'thumbs up' gesture with both hands.",
+          "confidence": 0.98,
+          "thumbnail_path": "thumbnails/ch3_pt1.jpg"
+        }
+      ]
+    }
+  ]
+}
