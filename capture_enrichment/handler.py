@@ -4,8 +4,13 @@ CLI entrypoint and Lambda handler stub.
 CLI usage:
     uv run python -m capture_enrichment.handler \\
         --input /path/to/session.capture \\
-        [--output result.json] \\
         [--telemetry-resolution 5.0]
+
+Output (written to cwd):
+    <session_id>_result/
+        result.json
+        thumbnails/
+            <chapter_id>_<action_order>.jpg   (one per event, 1-indexed)
 """
 
 import sys
@@ -30,33 +35,21 @@ app = typer.Typer(add_completion=False)
 @app.command()
 def main(
     input: Path = typer.Option(..., "--input", "-i", help="Path to .capture directory"),
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Write JSON to file (default: stdout)"),
     telemetry_resolution: Optional[float] = typer.Option(
         None,
         "--telemetry-resolution",
         help="Telemetry bucket size in seconds (overrides TELEMETRY_RESOLUTION_SEC)",
-    ),
-    thumbnails_dir: Optional[Path] = typer.Option(
-        None,
-        "--thumbnails-dir",
-        help="Write per-event JPEG thumbnails to this directory",
     ),
 ) -> None:
     cfg = Config()
     if telemetry_resolution is not None:
         cfg = cfg.model_copy(update={"telemetry_resolution_sec": telemetry_resolution})
 
-    result = process_capture(input, cfg, thumbnails_dir=thumbnails_dir)
-    json_out = result.model_dump_json(indent=2)
-
-    if output:
-        output.write_text(json_out)
-        typer.echo(f"Result written to {output}", err=True)
-    else:
-        typer.echo(json_out)
+    result_dir = process_capture(input, cfg)
+    typer.echo(f"Output written to {result_dir}", err=True)
 
 
-def process_capture(capture_path: Path, cfg: Config, thumbnails_dir: Optional[Path] = None) -> EnrichmentResult:
+def process_capture(capture_path: Path, cfg: Config) -> Path:
     """
     Main pipeline:
       1. Ingest capture package
@@ -66,7 +59,9 @@ def process_capture(capture_path: Path, cfg: Config, thumbnails_dir: Optional[Pa
       5. For each chunk: extract video, build telemetry, annotate (Gemini Pass 1)
       6. Deduplicate events across overlapping chunks
       7. Segment into chapters (Gemini Pass 2)
-      8. Return EnrichmentResult
+      8. Extract thumbnails, named <chapter_id>_<action_order>.jpg
+      9. Write <session_id>_result/ to cwd
+     10. Return the result directory path
     """
     typer.echo(f"Loading capture package: {capture_path}", err=True)
     pkg = load_capture_package(capture_path)
@@ -128,27 +123,33 @@ def process_capture(capture_path: Path, cfg: Config, thumbnails_dir: Optional[Pa
         all_events = deduplicate_events(chunk_results)
         typer.echo(f"  {len(all_events)} unique event(s)", err=True)
 
-        if thumbnails_dir is not None:
-            thumbnails_dir.mkdir(parents=True, exist_ok=True)
-            typer.echo(f"Extracting thumbnails → {thumbnails_dir}", err=True)
-            for event in all_events:
-                h, m, s = event.timestamp.split(":")
-                offset_sec = int(h) * 3600 + int(m) * 60 + int(s)
-                safe_ts = event.timestamp.replace(":", "-")
-                dst = thumbnails_dir / f"{safe_ts}.jpg"
-                extract_thumbnail(downsampled, dst, offset_sec)
-                event.thumbnail_path = str(dst)
-
         typer.echo("Segmenting into chapters...", err=True)
         chapters = segment_into_chapters(client, all_events, duration)
         typer.echo(f"  {len(chapters)} chapter(s)", err=True)
 
-    return EnrichmentResult(
+        # Thumbnail extraction happens after segmentation so names reflect chapter/order,
+        # and so thumbnail_path is absent from the Gemini segmentation prompt.
+        result_dir = Path(f"{session_id}_result")
+        thumbnails_subdir = result_dir / "thumbnails"
+        thumbnails_subdir.mkdir(parents=True, exist_ok=True)
+
+        typer.echo(f"Extracting thumbnails → {thumbnails_subdir}", err=True)
+        for chapter in chapters:
+            for order, event in enumerate(chapter.events, start=1):
+                h, m, s = event.timestamp.split(":")
+                offset_sec = int(h) * 3600 + int(m) * 60 + int(s)
+                filename = f"{chapter.id}_{order}.jpg"
+                extract_thumbnail(downsampled, thumbnails_subdir / filename, offset_sec)
+                event.thumbnail_path = f"thumbnails/{filename}"
+
+    result = EnrichmentResult(
         session_id=session_id,
         duration_seconds=metadata_duration,
         processed_at=datetime.now(timezone.utc).isoformat(),
         chapters=chapters,
     )
+    (result_dir / "result.json").write_text(result.model_dump_json(indent=2))
+    return result_dir
 
 
 # ── Lambda handler stub (Phase 2) ────────────────────────────────────────────
