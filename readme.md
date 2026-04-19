@@ -8,6 +8,8 @@ uv run python -m capture_enrichment.handler \
   --telemetry-resolution 5.0
 ```
 
+`uv run python tools/serve_viewer.py`
+
 Output written to `<session_id>_result/` in the current directory.
 
 ---

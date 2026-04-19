@@ -1,325 +1,305 @@
 {
   "session_id": "F480BE2D-F220-4C65-9755-38E64762E11E",
   "duration_seconds": 283.93670445833334,
-  "processed_at": "2026-04-19T20:51:53.778239+00:00",
+  "processed_at": "2026-04-19T21:59:38.133143+00:00",
   "chapters": [
     {
       "id": 1,
-      "title": "Initial Interaction & Introduction",
+      "title": "Initial Dishwasher Management & Kitchen Movement",
       "start_ts": "00:00:00",
-      "end_ts": "00:00:26",
+      "end_ts": "00:01:44",
       "events": [
         {
-          "timestamp": "00:00:03",
-          "action": "User performs a right-hand pinch gesture",
-          "confidence": 0.95,
+          "timestamp": "00:00:25",
+          "action": "User removes a fork from the dishwasher with their right hand",
+          "confidence": 1.0,
           "thumbnail_path": "thumbnails/ch1_pt1.jpg"
         },
         {
-          "timestamp": "00:00:09",
-          "action": "User speaks: 'This is my roommate guns, by the way.'",
-          "confidence": 0.95,
+          "timestamp": "00:00:29",
+          "action": "User removes a spoon from the dishwasher with their left hand",
+          "confidence": 1.0,
           "thumbnail_path": "thumbnails/ch1_pt2.jpg"
         },
         {
-          "timestamp": "00:00:12",
-          "action": "User performs a right-hand pinch gesture",
-          "confidence": 0.95,
+          "timestamp": "00:00:32",
+          "action": "User dries hands with a cloth",
+          "confidence": 0.8,
           "thumbnail_path": "thumbnails/ch1_pt3.jpg"
         },
         {
-          "timestamp": "00:00:15",
-          "action": "User performs a left-hand pinch gesture",
-          "confidence": 0.95,
+          "timestamp": "00:00:36",
+          "action": "User walks from the kitchen to the living room",
+          "confidence": 0.8,
           "thumbnail_path": "thumbnails/ch1_pt4.jpg"
         },
         {
-          "timestamp": "00:00:18",
-          "action": "User performs a left-hand pinch gesture",
-          "confidence": 0.95,
+          "timestamp": "00:00:41",
+          "action": "User walks from the living room to the kitchen",
+          "confidence": 0.8,
           "thumbnail_path": "thumbnails/ch1_pt5.jpg"
         },
         {
-          "timestamp": "00:00:24",
-          "action": "User performs a right-hand pinch gesture",
-          "confidence": 0.95,
+          "timestamp": "00:00:50",
+          "action": "User places cutlery into the dishwasher.",
+          "confidence": 0.9,
           "thumbnail_path": "thumbnails/ch1_pt6.jpg"
+        },
+        {
+          "timestamp": "00:01:09",
+          "action": "User looks around the room.",
+          "confidence": 0.8,
+          "thumbnail_path": "thumbnails/ch1_pt7.jpg"
+        },
+        {
+          "timestamp": "00:01:15",
+          "action": "User puts silverware into a kitchen drawer.",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch1_pt8.jpg"
+        },
+        {
+          "timestamp": "00:01:24",
+          "action": "User takes a plastic container from the dishwasher.",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch1_pt9.jpg"
+        },
+        {
+          "timestamp": "00:01:27",
+          "action": "User opens microwave and places a plastic container inside.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch1_pt10.jpg"
+        },
+        {
+          "timestamp": "00:01:32",
+          "action": "User opens a lower kitchen cabinet.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch1_pt11.jpg"
+        },
+        {
+          "timestamp": "00:01:35",
+          "action": "User opens an upper kitchen cabinet.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch1_pt12.jpg"
+        },
+        {
+          "timestamp": "00:01:41",
+          "action": "User loads a pot into the dishwasher.",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch1_pt13.jpg"
+        },
+        {
+          "timestamp": "00:01:44",
+          "action": "User closes the dishwasher.",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch1_pt14.jpg"
         }
       ]
     },
     {
       "id": 2,
-      "title": "Dishwasher Cutlery Loading",
-      "start_ts": "00:00:27",
-      "end_ts": "00:01:14",
+      "title": "Extensive Dishwasher Unloading & Item Sorting",
+      "start_ts": "00:01:45",
+      "end_ts": "00:03:12",
       "events": [
         {
-          "timestamp": "00:00:27",
-          "action": "Right hand performs pinch gesture while loading cutlery into dishwasher.",
-          "confidence": 0.95,
+          "timestamp": "00:01:48",
+          "action": "User retrieves glass bowl from cabinet",
+          "confidence": 0.7,
           "thumbnail_path": "thumbnails/ch2_pt1.jpg"
         },
         {
-          "timestamp": "00:00:30",
-          "action": "Left hand performs pinch gesture while loading cutlery into dishwasher.",
-          "confidence": 0.95,
+          "timestamp": "00:01:51",
+          "action": "User opens dishwasher door",
+          "confidence": 0.7,
           "thumbnail_path": "thumbnails/ch2_pt2.jpg"
+        },
+        {
+          "timestamp": "00:01:56",
+          "action": "User takes glass from dishwasher",
+          "confidence": 0.92,
+          "thumbnail_path": "thumbnails/ch2_pt3.jpg"
+        },
+        {
+          "timestamp": "00:01:59",
+          "action": "User places glass on counter",
+          "confidence": 0.7,
+          "thumbnail_path": "thumbnails/ch2_pt4.jpg"
+        },
+        {
+          "timestamp": "00:02:02",
+          "action": "User takes small cup from dishwasher",
+          "confidence": 0.92,
+          "thumbnail_path": "thumbnails/ch2_pt5.jpg"
+        },
+        {
+          "timestamp": "00:02:05",
+          "action": "User places glass on counter",
+          "confidence": 0.7,
+          "thumbnail_path": "thumbnails/ch2_pt6.jpg"
+        },
+        {
+          "timestamp": "00:02:08",
+          "action": "User takes glass from dishwasher",
+          "confidence": 0.7,
+          "thumbnail_path": "thumbnails/ch2_pt7.jpg"
+        },
+        {
+          "timestamp": "00:02:30",
+          "action": "User picks up a glass from the kitchen counter",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch2_pt8.jpg"
+        },
+        {
+          "timestamp": "00:02:35",
+          "action": "User picks up a glass from the kitchen counter",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch2_pt9.jpg"
+        },
+        {
+          "timestamp": "00:02:38",
+          "action": "User places a purple cup into the cabinet",
+          "confidence": 0.8,
+          "thumbnail_path": "thumbnails/ch2_pt10.jpg"
+        },
+        {
+          "timestamp": "00:02:41",
+          "action": "User picks up a glass from the kitchen counter",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch2_pt11.jpg"
+        },
+        {
+          "timestamp": "00:02:44",
+          "action": "User closes the cabinet door",
+          "confidence": 0.8,
+          "thumbnail_path": "thumbnails/ch2_pt12.jpg"
+        },
+        {
+          "timestamp": "00:02:47",
+          "action": "User removes a crystal glass from the dishwasher",
+          "confidence": 0.8,
+          "thumbnail_path": "thumbnails/ch2_pt13.jpg"
+        },
+        {
+          "timestamp": "00:02:50",
+          "action": "User removes a metal container from the dishwasher",
+          "confidence": 0.8,
+          "thumbnail_path": "thumbnails/ch2_pt14.jpg"
+        },
+        {
+          "timestamp": "00:02:53",
+          "action": "User removes a green cup from the dishwasher",
+          "confidence": 0.8,
+          "thumbnail_path": "thumbnails/ch2_pt15.jpg"
+        },
+        {
+          "timestamp": "00:02:56",
+          "action": "User places a white mug into the dishwasher",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch2_pt16.jpg"
+        },
+        {
+          "timestamp": "00:03:00",
+          "action": "User removes a silver rectangular container from the dishwasher",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch2_pt17.jpg"
+        },
+        {
+          "timestamp": "00:03:03",
+          "action": "User removes a second silver rectangular container from the dishwasher",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch2_pt18.jpg"
+        },
+        {
+          "timestamp": "00:03:06",
+          "action": "User removes a white mug from the dishwasher",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch2_pt19.jpg"
+        },
+        {
+          "timestamp": "00:03:09",
+          "action": "User removes a black blender tamper from the dishwasher",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch2_pt20.jpg"
+        },
+        {
+          "timestamp": "00:03:12",
+          "action": "User removes a yellow mug from the dishwasher",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch2_pt21.jpg"
         }
       ]
     },
     {
       "id": 3,
-      "title": "Extended General Physical Interactions",
-      "start_ts": "00:01:15",
-      "end_ts": "00:02:55",
+      "title": "Cabinet Organization & Concluding Kitchen Activities",
+      "start_ts": "00:03:13",
+      "end_ts": "00:04:43",
       "events": [
         {
-          "timestamp": "00:01:15",
-          "action": "User performs pinch gesture with right hand (physical interaction).",
+          "timestamp": "00:03:17",
+          "action": "User opens a kitchen cabinet door",
           "confidence": 0.95,
           "thumbnail_path": "thumbnails/ch3_pt1.jpg"
         },
         {
-          "timestamp": "00:01:18",
-          "action": "User performs pinch gesture with left hand (physical interaction).",
+          "timestamp": "00:03:20",
+          "action": "User takes a green mug from the kitchen cabinet",
           "confidence": 0.95,
           "thumbnail_path": "thumbnails/ch3_pt2.jpg"
         },
         {
-          "timestamp": "00:01:21",
-          "action": "User performs pinch gesture with left hand (physical interaction).",
+          "timestamp": "00:03:23",
+          "action": "User removes a metal spatula from the dishwasher",
           "confidence": 0.95,
           "thumbnail_path": "thumbnails/ch3_pt3.jpg"
         },
         {
-          "timestamp": "00:01:25",
-          "action": "User performs pinch gesture with right hand (physical interaction).",
-          "confidence": 0.95,
+          "timestamp": "00:03:46",
+          "action": "User takes a glass from an upper cabinet",
+          "confidence": 0.75,
           "thumbnail_path": "thumbnails/ch3_pt4.jpg"
         },
         {
-          "timestamp": "00:01:32",
-          "action": "User performs pinch gesture with left hand (physical interaction).",
+          "timestamp": "00:03:51",
+          "action": "User closes an upper cabinet door",
           "confidence": 0.95,
           "thumbnail_path": "thumbnails/ch3_pt5.jpg"
         },
         {
-          "timestamp": "00:01:35",
-          "action": "User performs pinch gesture with right hand (physical interaction).",
-          "confidence": 0.95,
+          "timestamp": "00:03:55",
+          "action": "User opens an upper cabinet door",
+          "confidence": 0.75,
           "thumbnail_path": "thumbnails/ch3_pt6.jpg"
         },
         {
-          "timestamp": "00:01:38",
-          "action": "User performs pinch gesture with left hand (physical interaction).",
+          "timestamp": "00:04:01",
+          "action": "User closes an upper cabinet door",
           "confidence": 0.95,
           "thumbnail_path": "thumbnails/ch3_pt7.jpg"
         },
         {
-          "timestamp": "00:01:41",
-          "action": "User performs pinch gesture with right hand (physical interaction).",
+          "timestamp": "00:04:06",
+          "action": "User pushes the lower rack back into the dishwasher",
           "confidence": 0.95,
           "thumbnail_path": "thumbnails/ch3_pt8.jpg"
         },
         {
-          "timestamp": "00:01:44",
-          "action": "User performs pinch gesture with left hand (physical interaction).",
-          "confidence": 0.95,
+          "timestamp": "00:04:09",
+          "action": "User opens a lower cabinet door",
+          "confidence": 0.75,
           "thumbnail_path": "thumbnails/ch3_pt9.jpg"
         },
         {
-          "timestamp": "00:01:52",
-          "action": "User performs right hand pinch gesture",
-          "confidence": 0.6,
+          "timestamp": "00:04:14",
+          "action": "User pours liquid from one blender component into another",
+          "confidence": 0.9,
           "thumbnail_path": "thumbnails/ch3_pt10.jpg"
         },
         {
-          "timestamp": "00:01:57",
-          "action": "User performs left hand pinch gesture",
-          "confidence": 0.6,
+          "timestamp": "00:04:40",
+          "action": "User surveys the kitchen environment with head movement",
+          "confidence": 0.9,
           "thumbnail_path": "thumbnails/ch3_pt11.jpg"
-        },
-        {
-          "timestamp": "00:02:03",
-          "action": "User performs left hand pinch gesture",
-          "confidence": 0.6,
-          "thumbnail_path": "thumbnails/ch3_pt12.jpg"
-        },
-        {
-          "timestamp": "00:02:08",
-          "action": "User performs left hand pinch gesture",
-          "confidence": 0.6,
-          "thumbnail_path": "thumbnails/ch3_pt13.jpg"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "title": "Organizing Kitchenware from Dish Rack and Counter",
-      "start_ts": "00:02:56",
-      "end_ts": "00:03:45",
-      "events": [
-        {
-          "timestamp": "00:02:56",
-          "action": "User grasps blender component from dish rack with right hand.",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch4_pt1.jpg"
-        },
-        {
-          "timestamp": "00:03:00",
-          "action": "User grasps metal container from dish rack with left hand.",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch4_pt2.jpg"
-        },
-        {
-          "timestamp": "00:03:03",
-          "action": "User grasps metal container from dish rack with right hand.",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch4_pt3.jpg"
-        },
-        {
-          "timestamp": "00:03:07",
-          "action": "User grasps blender tool from dish rack with right hand.",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch4_pt4.jpg"
-        },
-        {
-          "timestamp": "00:03:14",
-          "action": "User grasps white mug from counter with left hand.",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch4_pt5.jpg"
-        },
-        {
-          "timestamp": "00:03:18",
-          "action": "User places yellow mug in cabinet with right hand.",
-          "confidence": 0.9,
-          "thumbnail_path": "thumbnails/ch4_pt6.jpg"
-        },
-        {
-          "timestamp": "00:03:23",
-          "action": "User grasps white mug from dishwasher bottom rack with right hand.",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch4_pt7.jpg"
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "title": "Appliance & Cabinet Operations",
-      "start_ts": "00:03:46",
-      "end_ts": "00:04:12",
-      "events": [
-        {
-          "timestamp": "00:03:46",
-          "action": "User opens a kitchen cabinet",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch5_pt1.jpg"
-        },
-        {
-          "timestamp": "00:03:50",
-          "action": "User closes the cabinet",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch5_pt2.jpg"
-        },
-        {
-          "timestamp": "00:03:54",
-          "action": "User opens a kitchen cabinet",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch5_pt3.jpg"
-        },
-        {
-          "timestamp": "00:03:58",
-          "action": "User closes the cabinet",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch5_pt4.jpg"
-        },
-        {
-          "timestamp": "00:04:01",
-          "action": "User places an item into the dishwasher",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch5_pt5.jpg"
-        },
-        {
-          "timestamp": "00:04:04",
-          "action": "User closes the dishwasher",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch5_pt6.jpg"
-        },
-        {
-          "timestamp": "00:04:07",
-          "action": "User opens another lower kitchen cabinet",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch5_pt7.jpg"
-        },
-        {
-          "timestamp": "00:04:10",
-          "action": "User opens left kitchen cabinet",
-          "confidence": 0.9,
-          "thumbnail_path": "thumbnails/ch5_pt8.jpg"
-        }
-      ]
-    },
-    {
-      "id": 6,
-      "title": "Blender Preparation & Kitchen Item Placement",
-      "start_ts": "00:04:13",
-      "end_ts": "00:04:41",
-      "events": [
-        {
-          "timestamp": "00:04:13",
-          "action": "User attaches a part to a blender",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch6_pt1.jpg"
-        },
-        {
-          "timestamp": "00:04:17",
-          "action": "User rinses blender container under faucet",
-          "confidence": 0.9,
-          "thumbnail_path": "thumbnails/ch6_pt2.jpg"
-        },
-        {
-          "timestamp": "00:04:22",
-          "action": "User grabs small blender part with right hand (pinch)",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch6_pt3.jpg"
-        },
-        {
-          "timestamp": "00:04:27",
-          "action": "User rinses blender pitcher under faucet (pinch)",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch6_pt4.jpg"
-        },
-        {
-          "timestamp": "00:04:31",
-          "action": "User opens top left kitchen cabinet with left hand (pinch)",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch6_pt5.jpg"
-        },
-        {
-          "timestamp": "00:04:34",
-          "action": "User closes drawer below counter with left hand (pinch)",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch6_pt6.jpg"
-        },
-        {
-          "timestamp": "00:04:38",
-          "action": "User opens right kitchen cabinet with left hand (pinch)",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch6_pt7.jpg"
-        }
-      ]
-    },
-    {
-      "id": 7,
-      "title": "Session Conclusion",
-      "start_ts": "00:04:42",
-      "end_ts": "00:04:43",
-      "events": [
-        {
-          "timestamp": "00:04:42",
-          "action": "User gives a physical thumbs-up gesture with both hands.",
-          "confidence": 0.95,
-          "thumbnail_path": "thumbnails/ch7_pt1.jpg"
         }
       ]
     }

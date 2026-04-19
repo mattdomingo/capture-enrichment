@@ -49,6 +49,19 @@ def main(
     typer.echo(f"Output written to {result_dir}", err=True)
 
 
+def _unique_result_dir(session_id: str) -> Path:
+    """Return a non-existing result directory path, appending (1), (2), … as needed."""
+    base = Path(f"{session_id}_result")
+    if not base.exists():
+        return base
+    counter = 1
+    while True:
+        candidate = Path(f"{session_id}_result ({counter})")
+        if not candidate.exists():
+            return candidate
+        counter += 1
+
+
 def process_capture(capture_path: Path, cfg: Config) -> Path:
     """
     Main pipeline:
@@ -129,7 +142,7 @@ def process_capture(capture_path: Path, cfg: Config) -> Path:
 
         # Thumbnail extraction happens after segmentation so names reflect chapter/order,
         # and so thumbnail_path is absent from the Gemini segmentation prompt.
-        result_dir = Path(f"{session_id}_result")
+        result_dir = _unique_result_dir(session_id)
         thumbnails_subdir = result_dir / "thumbnails"
         thumbnails_subdir.mkdir(parents=True, exist_ok=True)
 
