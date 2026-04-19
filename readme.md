@@ -238,6 +238,16 @@ uv run python -m capture_enrichment.handler \
 uv run pytest
 ```
 
+### Viewer
+
+A lightweight static UI renders thumbnails and annotations side by side:
+
+```bash
+uv run python tools/serve_viewer.py
+```
+
+This indexes every `*_result/` folder in the cwd into `sessions.json`, starts a local server on `http://127.0.0.1:8000/viewer.html`, and opens it in your browser. Pick a session from the dropdown, scroll chapters in the sidebar, click a thumbnail to open the lightbox.
+
 ---
 
 ## Configuration

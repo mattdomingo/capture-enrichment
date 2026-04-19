@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>capture-enrichment viewer</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #161b22;
+      --panel-2: #1c2330;
+      --border: #2a3340;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-soft: #1f6feb33;
+      --good: #3fb950;
+      --warn: #d29922;
+      --bad: #f85149;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 20px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    header .meta {
+      margin-left: auto;
+      display: flex;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    header .meta strong { color: var(--text); font-weight: 600; }
+    select, input[type="text"] {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font: inherit;
+      min-width: 360px;
+    }
+    select:focus, input:focus { outline: 1px solid var(--accent); border-color: var(--accent); }
+
+    main {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: calc(100vh - 53px);
+    }
+
+    /* Sidebar */
+    aside {
+      position: sticky;
+      top: 53px;
+      align-self: start;
+      max-height: calc(100vh - 53px);
+      overflow-y: auto;
+      background: var(--panel);
+      border-right: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    aside .nav-title {
+      font-size: 11px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 16px 8px;
+    }
+    aside ol { list-style: none; padding: 0; margin: 0; }
+    aside .nav-item {
+      display: block;
+      padding: 10px 16px;
+      border-left: 2px solid transparent;
+      cursor: pointer;
+      color: var(--text);
+    }
+    aside .nav-item:hover { background: var(--panel-2); text-decoration: none; }
+    aside .nav-item.active {
+      background: var(--accent-soft);
+      border-left-color: var(--accent);
+    }
+    aside .nav-item .ch-num {
+      color: var(--muted);
+      font-size: 11px;
+      margin-right: 6px;
+    }
+    aside .nav-item .ch-title {
+      font-weight: 500;
+      display: block;
+    }
+    aside .nav-item .ch-sub {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Content */
+    .content { padding: 24px 28px 80px; max-width: 1200px; }
+    .empty {
+      color: var(--muted);
+      padding: 40px;
+      text-align: center;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+    }
+
+    .chapter { margin-bottom: 36px; scroll-margin-top: 70px; }
+    .chapter h2 {
+      margin: 0 0 4px;
+      font-size: 18px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .chapter h2 .ch-id {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .chapter .range {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 14px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .events {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .event {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 16px;
+      align-items: stretch;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      transition: border-color 120ms ease, transform 120ms ease;
+    }
+    .event:hover { border-color: var(--accent); }
+    .event .thumb {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+    .event .thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .event .thumb .ts {
+      position: absolute;
+      bottom: 6px; left: 6px;
+      background: rgba(0,0,0,0.65);
+      color: #fff;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-variant-numeric: tabular-nums;
+    }
+    .event .body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 4px 4px 4px 0;
+    }
+    .event .action { font-size: 14px; line-height: 1.45; }
+    .event .meta-row {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .conf {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+    .conf .bar {
+      width: 60px; height: 6px;
+      background: var(--panel-2);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .conf .bar > span {
+      display: block; height: 100%;
+      background: var(--good);
+    }
+    .conf.warn .bar > span { background: var(--warn); }
+    .conf.bad  .bar > span { background: var(--bad); }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 40px;
+      cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+    .lightbox .caption {
+      position: absolute;
+      bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      color: #ddd;
+      font-size: 13px;
+      background: rgba(0,0,0,0.6);
+      padding: 6px 12px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 720px) {
+      main { grid-template-columns: 1fr; }
+      aside { position: static; max-height: none; }
+      .event { grid-template-columns: 1fr; }
+      .event .thumb { width: 100%; max-width: 360px; }
+      header select, header input { min-width: 0; flex: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>capture-enrichment</h1>
+    <select id="sessionPicker" aria-label="Session"></select>
+    <div class="meta" id="sessionMeta"></div>
+  </header>
+
+  <main>
+    <aside>
+      <div class="nav-title">Chapters</div>
+      <ol id="chapterNav"></ol>
+    </aside>
+    <section class="content" id="content">
+      <div class="empty">Loading…</div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-hidden="true">
+    <img id="lightboxImg" alt="" />
+    <div class="caption" id="lightboxCaption"></div>
+  </div>
+
+  <script>
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+    const fmtDuration = (sec) => {
+      sec = Math.round(sec);
+      const h = Math.floor(sec / 3600);
+      const m = Math.floor((sec % 3600) / 60);
+      const s = sec % 60;
+      const pad = (n) => String(n).padStart(2, "0");
+      return h ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
+    };
+
+    const fmtDate = (iso) => {
+      try { return new Date(iso).toLocaleString(); } catch { return iso; }
+    };
+
+    const confClass = (c) => (c >= 0.85 ? "" : c >= 0.6 ? "warn" : "bad");
+
+    function eventCount(chapter) {
+      return chapter.events ? chapter.events.length : 0;
+    }
+
+    async function loadSessionsIndex() {
+      try {
+        const res = await fetch("sessions.json", { cache: "no-store" });
+        if (!res.ok) return [];
+        const data = await res.json();
+        return Array.isArray(data?.sessions) ? data.sessions : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function setSessionPicker(sessions, current) {
+      const sel = $("#sessionPicker");
+      sel.innerHTML = "";
+      if (!sessions.length) {
+        const opt = document.createElement("option");
+        opt.textContent = "(no sessions.json — use ?session=<id>)";
+        opt.disabled = true;
+        sel.appendChild(opt);
+        sel.disabled = true;
+        return;
+      }
+      sessions.forEach((s) => {
+        const opt = document.createElement("option");
+        opt.value = s.session_id;
+        opt.textContent = `${s.session_id}  ·  ${s.duration ? fmtDuration(s.duration) : "?"}  ·  ${s.chapter_count ?? "?"} chapters`;
+        sel.appendChild(opt);
+      });
+      if (current) sel.value = current;
+      sel.onchange = () => {
+        const url = new URL(location.href);
+        url.searchParams.set("session", sel.value);
+        location.href = url.toString();
+      };
+    }
+
+    async function loadResult(sessionId) {
+      const folder = `${sessionId}_result`;
+      const res = await fetch(`${folder}/result.json`, { cache: "no-store" });
+      if (!res.ok) throw new Error(`${folder}/result.json → ${res.status}`);
+      const data = await res.json();
+      return { folder, data };
+    }
+
+    function renderMeta(data) {
+      const el = $("#sessionMeta");
+      el.innerHTML = `
+        <div>duration: <strong>${fmtDuration(data.duration_seconds)}</strong></div>
+        <div>chapters: <strong>${data.chapters.length}</strong></div>
+        <div>events: <strong>${data.chapters.reduce((n, c) => n + eventCount(c), 0)}</strong></div>
+        <div>processed: <strong>${fmtDate(data.processed_at)}</strong></div>
+      `;
+    }
+
+    function renderNav(data) {
+      const ol = $("#chapterNav");
+      ol.innerHTML = "";
+      data.chapters.forEach((ch) => {
+        const li = document.createElement("li");
+        li.className = "nav-item";
+        li.dataset.chapterId = ch.id;
+        li.innerHTML = `
+          <span class="ch-num">CH ${ch.id}</span>
+          <span class="ch-title">${escapeHtml(ch.title)}</span>
+          <span class="ch-sub">${ch.start_ts}–${ch.end_ts} · ${eventCount(ch)} events</span>
+        `;
+        li.addEventListener("click", () => {
+          const target = document.getElementById(`chapter-${ch.id}`);
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        ol.appendChild(li);
+      });
+    }
+
+    function renderChapters(folder, data) {
+      const root = $("#content");
+      root.innerHTML = "";
+      data.chapters.forEach((ch) => {
+        const chEl = document.createElement("section");
+        chEl.className = "chapter";
+        chEl.id = `chapter-${ch.id}`;
+        chEl.innerHTML = `
+          <h2><span class="ch-id">CHAPTER ${ch.id}</span>${escapeHtml(ch.title)}</h2>
+          <div class="range">${ch.start_ts} → ${ch.end_ts} · ${eventCount(ch)} events</div>
+          <div class="events"></div>
+        `;
+        const events = chEl.querySelector(".events");
+        (ch.events || []).forEach((ev) => {
+          const evEl = document.createElement("article");
+          evEl.className = "event";
+          const conf = typeof ev.confidence === "number" ? ev.confidence : 0;
+          const pct = Math.round(conf * 100);
+          const src = `${folder}/${ev.thumbnail_path}`;
+          evEl.innerHTML = `
+            <div class="thumb" data-full="${src}" data-caption="${escapeAttr(ev.timestamp + ' — ' + ev.action)}">
+              <img loading="lazy" src="${src}" alt="${escapeAttr(ev.action)}" />
+              <div class="ts">${ev.timestamp}</div>
+            </div>
+            <div class="body">
+              <div class="action">${escapeHtml(ev.action)}</div>
+              <div class="meta-row">
+                <span class="conf ${confClass(conf)}">
+                  conf ${pct}%
+                  <span class="bar"><span style="width:${pct}%"></span></span>
+                </span>
+              </div>
+            </div>
+          `;
+          events.appendChild(evEl);
+        });
+        root.appendChild(chEl);
+      });
+      attachLightbox();
+      attachScrollSpy(data);
+    }
+
+    function attachLightbox() {
+      const lb = $("#lightbox");
+      const img = $("#lightboxImg");
+      const cap = $("#lightboxCaption");
+      $$(".thumb").forEach((t) => {
+        t.addEventListener("click", () => {
+          img.src = t.dataset.full;
+          cap.textContent = t.dataset.caption || "";
+          lb.classList.add("open");
+        });
+      });
+      lb.addEventListener("click", () => {
+        lb.classList.remove("open");
+        img.src = "";
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          lb.classList.remove("open");
+          img.src = "";
+        }
+      });
+    }
+
+    function attachScrollSpy(data) {
+      const navItems = $$(".nav-item");
+      const sections = data.chapters
+        .map((ch) => document.getElementById(`chapter-${ch.id}`))
+        .filter(Boolean);
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id.replace("chapter-", "");
+            navItems.forEach((n) => n.classList.toggle("active", n.dataset.chapterId === id));
+          }
+        });
+      }, { rootMargin: "-40% 0px -55% 0px", threshold: 0 });
+      sections.forEach((s) => observer.observe(s));
+    }
+
+    function escapeHtml(s) {
+      return String(s ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+      }[c]));
+    }
+    function escapeAttr(s) { return escapeHtml(s); }
+
+    async function main() {
+      const params = new URLSearchParams(location.search);
+      const sessions = await loadSessionsIndex();
+      let sessionId = params.get("session");
+      if (!sessionId && sessions.length) sessionId = sessions[0].session_id;
+      setSessionPicker(sessions, sessionId);
+
+      if (!sessionId) {
+        $("#content").innerHTML = `<div class="empty">
+          No session specified. Append <code>?session=&lt;SESSION_ID&gt;</code> to the URL,
+          or generate <code>sessions.json</code> with <code>tools/serve_viewer.py</code>.
+        </div>`;
+        return;
+      }
+
+      try {
+        const { folder, data } = await loadResult(sessionId);
+        document.title = `${sessionId} · capture-enrichment viewer`;
+        renderMeta(data);
+        renderNav(data);
+        renderChapters(folder, data);
+      } catch (err) {
+        $("#content").innerHTML = `<div class="empty">
+          Failed to load <code>${escapeHtml(sessionId)}_result/result.json</code><br/>
+          <small>${escapeHtml(err.message)}</small>
+        </div>`;
+      }
+    }
+
+    main();
+  </script>
+</body>
+</html>
