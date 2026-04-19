@@ -1,0 +1,165 @@
+{
+  "session_id": "39A90878-5D69-437A-946C-F8B3C65F6E40",
+  "duration_seconds": 30.155582791666575,
+  "processed_at": "2026-04-17T21:13:08.358315+00:00",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Initial Environment Gaze",
+      "start_ts": "00:00:00",
+      "end_ts": "00:00:03",
+      "events": [
+        {
+          "timestamp": "00:00:00",
+          "action": "User gazes at a soccer game displayed on the TV.",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch1_pt1.jpg"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Gaze Reorientation",
+      "start_ts": "00:00:03",
+      "end_ts": "00:00:06",
+      "events": [
+        {
+          "timestamp": "00:03:00",
+          "action": "User shifts gaze downwards towards the floor and own feet.",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch2_pt1.jpg"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Pinch Interaction Sequence",
+      "start_ts": "00:00:06",
+      "end_ts": "00:00:25",
+      "events": [
+        {
+          "timestamp": "00:06:831",
+          "action": "User performs a pinch gesture with the left hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt1.jpg"
+        },
+        {
+          "timestamp": "00:07:247",
+          "action": "User performs a pinch gesture with the right hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt2.jpg"
+        },
+        {
+          "timestamp": "00:07:365",
+          "action": "User performs a pinch gesture with the right hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt3.jpg"
+        },
+        {
+          "timestamp": "00:08:603",
+          "action": "User performs a pinch gesture with the right hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt4.jpg"
+        },
+        {
+          "timestamp": "00:08:848",
+          "action": "User performs a pinch gesture with the left hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt5.jpg"
+        },
+        {
+          "timestamp": "00:08:870",
+          "action": "User performs a pinch gesture with the right hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt6.jpg"
+        },
+        {
+          "timestamp": "00:08:948",
+          "action": "User performs a pinch gesture with the left hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt7.jpg"
+        },
+        {
+          "timestamp": "00:09:014",
+          "action": "User performs a pinch gesture with the left hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt8.jpg"
+        },
+        {
+          "timestamp": "00:09:552",
+          "action": "User performs a pinch gesture with the right hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt9.jpg"
+        },
+        {
+          "timestamp": "00:09:948",
+          "action": "User performs a pinch gesture with the left hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt10.jpg"
+        },
+        {
+          "timestamp": "00:10:281",
+          "action": "User performs a pinch gesture with the right hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt11.jpg"
+        },
+        {
+          "timestamp": "00:12:003",
+          "action": "User performs a pinch gesture with the right hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt12.jpg"
+        },
+        {
+          "timestamp": "00:12:214",
+          "action": "User performs a pinch gesture with the right hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt13.jpg"
+        },
+        {
+          "timestamp": "00:12:636",
+          "action": "User performs a pinch gesture with the right hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt14.jpg"
+        },
+        {
+          "timestamp": "00:13:381",
+          "action": "User performs a pinch gesture with the right hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt15.jpg"
+        },
+        {
+          "timestamp": "00:13:781",
+          "action": "User performs a pinch gesture with the right hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt16.jpg"
+        },
+        {
+          "timestamp": "00:15:030",
+          "action": "User performs a pinch gesture with the left hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch3_pt17.jpg"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Concluding Hand Gestures",
+      "start_ts": "00:00:25",
+      "end_ts": "00:00:30",
+      "events": [
+        {
+          "timestamp": "00:00:25",
+          "action": "User performs quick open-hand gesture with right hand.",
+          "confidence": 0.9,
+          "thumbnail_path": "thumbnails/ch4_pt1.jpg"
+        },
+        {
+          "timestamp": "00:00:28",
+          "action": "User performs pointing gesture with left hand.",
+          "confidence": 0.95,
+          "thumbnail_path": "thumbnails/ch4_pt2.jpg"
+        }
+      ]
+    }
+  ]
+}
