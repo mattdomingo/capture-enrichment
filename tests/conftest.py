@@ -1,13 +1,40 @@
 """Shared fixtures for the test suite."""
 
+import os
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import pytest
 
-CAPTURE_1 = Path("/Users/matthewdomingo/Dev/holos/2026-03-08T17-35-19-39A90878-5D69-437A-946C-F8B3C65F6E40.capture")
-CAPTURE_2 = Path("/Users/matthewdomingo/Dev/holos/2026-03-13T17-38-41-D834FA49-D935-4FAA-A4BA-C816E3C162AC.capture")
+CAPTURE_1_ENV = "CAPTURE_ENRICHMENT_TEST_CAPTURE_1"
+CAPTURE_2_ENV = "CAPTURE_ENRICHMENT_TEST_CAPTURE_2"
+
+
+def _capture_from_env(env_var: str) -> Path:
+    raw = os.environ.get(env_var)
+    if not raw:
+        pytest.skip(
+            f"{env_var} is not set; point it at a .capture directory to run this test."
+        )
+    path = Path(raw).expanduser()
+    if not path.exists():
+        pytest.skip(f"{env_var}={raw} does not exist on this machine.")
+    if not path.is_dir():
+        pytest.skip(
+            f"{env_var}={raw} is not a directory; point it at a .capture directory to run this test."
+        )
+    return path
+
+
+@pytest.fixture
+def capture_1() -> Path:
+    return _capture_from_env(CAPTURE_1_ENV)
+
+
+@pytest.fixture
+def capture_2() -> Path:
+    return _capture_from_env(CAPTURE_2_ENV)
 
 
 def _small_device_df(duration: float = 10.0, hz: float = 50.0) -> pd.DataFrame:
