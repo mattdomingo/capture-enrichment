@@ -20,6 +20,10 @@ def _capture_from_env(env_var: str) -> Path:
     path = Path(raw).expanduser()
     if not path.exists():
         pytest.skip(f"{env_var}={raw} does not exist on this machine.")
+    if not path.is_dir():
+        pytest.skip(
+            f"{env_var}={raw} is not a directory; point it at a .capture directory to run this test."
+        )
     return path
 
 
